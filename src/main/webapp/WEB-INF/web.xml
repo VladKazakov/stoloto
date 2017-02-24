@@ -4,4 +4,12 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+    <servlet-name>firstServlet</servlet-name>
+    <servlet-class>com.FirstServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>firstServlet</servlet-name>
+    <url-pattern>/stoloto</url-pattern>
+  </servlet-mapping>
 </web-app>
