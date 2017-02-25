@@ -1,5 +1,6 @@
 package com;
 
+import com.dao.RootImpl;
 import com.model.Root;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -15,7 +16,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 
@@ -62,28 +65,30 @@ public class FirstServlet extends HttpServlet {
                 /**
                  * СОХРАНЕНИЕ ОБЪЕКТА В БД
                  */
+                RootImpl rootImpl = new RootImpl();
+                rootImpl.add(customer);
 
 
                 /**
                  * Возврат файла
                  */
-//                // тип данных, которые вы отправляете
-//                // например application/pdf, text/plain, text/html, image/jpg
-//                response.setContentType("image/jpg");
-//                response.setHeader("Content-disposition","attachment; filename=23.jpg");
-//                // файл, который вы отправляете
-//                File my_file = new File("c:\\!test\\23.jpg");
-//                // отправить файл в response
-//                OutputStream out = response.getOutputStream();
-//                FileInputStream in = new FileInputStream(my_file);
-//                byte[] buffer = new byte[4096];
-//                int length;
-//                while ((length = in.read(buffer)) > 0){
-//                    out.write(buffer, 0, length);
-//                }
-//                // освободить ресурсы
-//                in.close();
-//                out.flush();
+                // тип данных, которые вы отправляете
+                // например application/pdf, text/plain, text/html, image/jpg
+                response.setContentType("image/jpg");
+                response.setHeader("Content-disposition","attachment; filename=23.jpg");
+                // файл, который вы отправляете
+                File my_file = new File("c:\\!test\\23.jpg");
+                // отправить файл в response
+                OutputStream out = response.getOutputStream();
+                FileInputStream in = new FileInputStream(my_file);
+                byte[] buffer = new byte[4096];
+                int length;
+                while ((length = in.read(buffer)) > 0){
+                    out.write(buffer, 0, length);
+                }
+                // освободить ресурсы
+                in.close();
+                out.flush();
 
 
 
