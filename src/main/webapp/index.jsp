@@ -7,9 +7,9 @@
 </head>
 <body>
 <h2>СТОЛОТО. Тестовое задание от 27.02.2017</h2>
-<form name="forma" action="http://localhost:8080/stoloto" method="post" enctype="multipart/form-data">
+<form action="http://localhost:8080/stoloto" method="post" enctype="multipart/form-data">
     <input name="description" type="text"><br>
-    <input name="data" type="file"><br>
+    <input name="file" type="file"><br>
     <input type="submit"><br>
 </form>
 

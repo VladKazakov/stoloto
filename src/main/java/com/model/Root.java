@@ -1,46 +1,36 @@
 package com.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+@XmlRootElement//(name = "TEST")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Root {
 
-    private String fieldA;
 
-    @XmlAttribute
-    private String fieldB;
+    List<Stoloto> property = new ArrayList<Stoloto>();
 
-    public String fieldC;
-
-
-
-    @XmlAttribute
-    public String getPropertyA() {
-        return fieldA;
+    public Root() {
     }
 
-    public void setPropertyA(String a) {
-        this.fieldA = a;
+    public Root(List<Stoloto> list) {
+        this.property = list;
     }
 
-    public String getPropertyB() {
-        return fieldB;
+    public List<Stoloto> getList() {
+        return property;
     }
 
-    public void setPropertyB(String b) {
-        this.fieldB = b;
+
+    public void setList(List<Stoloto> list) {
+        this.property = list;
     }
 
     @Override
     public String toString() {
         return "Root{" +
-                "fieldA='" + fieldA + '\'' +
-                ", fieldB='" + fieldB + '\'' +
-                ", fieldC='" + fieldC + '\'' +
+                "property=" + property +
                 '}';
     }
 }
