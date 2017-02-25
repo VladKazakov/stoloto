@@ -20,8 +20,6 @@ public class Main {
         Root root = new Root();
         List list = new ArrayList();
 
-
-
         List<Stoloto> list1 = new ArrayList<Stoloto>();
         list1.add(new Stoloto("NAME10", "VALUE10"));
         // ПОЛЯ
