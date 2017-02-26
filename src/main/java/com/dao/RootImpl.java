@@ -6,10 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * Создал Vlad Kazakov дата: 22.02.2017.
+ * Создал Vlad Kazakov дата: 26.02.2017.
  */
 public class RootImpl implements RootDao {
-
     public void add(Root root) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();

@@ -1,7 +1,7 @@
 package com;
 
-import com.dao.TestSingleImpl;
-import com.model.TestSingle;
+import com.dao.RootImpl;
+import com.model.Root;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -21,9 +21,12 @@ import java.util.List;
 
 /**
  * Создал Vlad Kazakov дата: 22.02.2017.
+ * Сервлет для обработки входящего POST-запроса
  */
 public class FirstServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    // Path, где будут сохраняться загруженные файлы
     static final String UPLOAD_DIRECTORY = "c:/!test/qwe/";
 
     @Override
@@ -41,7 +44,7 @@ public class FirstServlet extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
             try {
 
-                // Разпарсиваем запрос (request)
+                // Распарсиваем запрос (request)
                 List<FileItem> multiparts = upload.parseRequest(request);
 
                 // Сохраняем на диске переданный файл
@@ -56,72 +59,58 @@ public class FirstServlet extends HttpServlet {
 
                 File file = new File(UPLOAD_DIRECTORY + File.separator + namefile);
 
-                JAXBContext jaxbContext = JAXBContext.newInstance(TestSingle.class);
+                JAXBContext jaxbContext = JAXBContext.newInstance(Root.class);
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                TestSingle customer = (TestSingle) jaxbUnmarshaller.unmarshal(file);
+                Root customer = (Root) jaxbUnmarshaller.unmarshal(file);
+
+
                 /**
                  * СОХРАНЕНИЕ ОБЪЕКТА В БД
                  */
-//                RootImpl rootImpl = new RootImpl();
-//                rootImpl.add(customer);
-                TestSingleImpl testSingle = new TestSingleImpl();
+                RootImpl testSingle = new RootImpl();
                 testSingle.add(customer);
 
 
-
-                // Конвертируем объект обратно в XML
-                JAXBContext jc = JAXBContext.newInstance(TestSingle.class);
+                /**
+                 * Конвертируем объект в XML и сохраняем его для последующей передачи в файл
+                 */
+                JAXBContext jc = JAXBContext.newInstance(Root.class);
                 Marshaller marshaller = jc.createMarshaller();
                 marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-                String s = file.getName();
-                String filePath = "c:\\!test\\send\\" + s;
 
+                // Путь, где будут сохраняться сформированные файлы
+                String filePath = "c:\\!test\\send\\" + file.getName();
                 File file2 = new File(filePath);
                 marshaller.marshal(customer, file2);
-                //response.getWriter().println();
 
 
 
                 /**
                  * Возврат файла
                  */
-                // тип данных, которые вы отправляете
-                // например application/pdf, text/plain, text/html, image/jpg
                 response.setContentType("text/xml");
-                response.setHeader("Content-disposition","attachment; filename="+ file.getName());
-                // файл, который вы отправляете
-                //File my_file = new File("c:\\!test\\23.jpg");
-                // отправить файл в response
+                response.setHeader("Content-disposition", "attachment; filename=" + file.getName());
                 OutputStream out = response.getOutputStream();
                 FileInputStream in = new FileInputStream(file2);
                 byte[] buffer = new byte[4096];
                 int length;
-                while ((length = in.read(buffer)) > 0){
+                while ((length = in.read(buffer)) > 0) {
                     out.write(buffer, 0, length);
                 }
-                // освободить ресурсы
                 in.close();
                 out.flush();
 
-
-
-
-//                response.getWriter().println("XML to Java Object:");
-//                response.getWriter().println(customer.toString());
 
             } catch (PropertyException e) {
                 e.printStackTrace();
             } catch (JAXBException e) {
                 e.printStackTrace();
             } catch (Exception e) {
-                request.setAttribute("message", "File Upload Failed due to " + e);
+                e.printStackTrace();
             }
         } else {
-            request.setAttribute("message", "This Servlet only handles file upload request");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().println("Ошибка. ContentType неверно установлен.");
         }
-        //request.getRequestDispatcher("/result.jsp").forward(request, response);
-
-
     }
-
 }

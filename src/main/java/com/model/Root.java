@@ -1,57 +1,77 @@
 package com.model;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
+import static javax.persistence.GenerationType.IDENTITY;
 
-@XmlRootElement//(name = "TEST")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Root {
+/**
+ * Создал Vlad Kazakov дата: 26.02.2017.
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@Entity
+@Table(name = "testsingle")
+public class Root implements Serializable {
+
+    /**
+     * Поле Id
+     */
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    private Long id;
+
+    /**
+     * Атрибут
+     */
+    @XmlAttribute
+    @Column
+    private String name;
+
+    /**
+     * Список с элементами типа String
+     */
+    @XmlElement
+    @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "testsingle_id"))
+    @Column
+    private List<String> list;
 
 
-    List<Stoloto> property = new ArrayList<Stoloto>();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Конструктор
+     */
     public Root() {
     }
 
-    public Root(List<Stoloto> list) {
-        this.property = list;
+    /**
+     * Геттеры с сеттеры
+     *
+     * @return
+     */
+    public List<String> getList() {
+        return list;
     }
 
-    public List<Stoloto> getList() {
-        return property;
+    public void setList(List<String> list) {
+        this.list = list;
     }
 
-
-    public void setList(List<Stoloto> list) {
-        this.property = list;
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public String toString() {
-        return "Root{" +
-                "property=" + property +
-                '}';
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
