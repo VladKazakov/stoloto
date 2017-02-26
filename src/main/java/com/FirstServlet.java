@@ -1,7 +1,7 @@
 package com;
 
-import com.dao.RootImpl;
-import com.model.Root;
+import com.dao.TestSingleImpl;
+import com.model.TestSingle;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -59,14 +59,16 @@ public class FirstServlet extends HttpServlet {
 
                 File file = new File(UPLOAD_DIRECTORY + File.separator + namefile);
 
-                JAXBContext jaxbContext = JAXBContext.newInstance(Root.class);
+                JAXBContext jaxbContext = JAXBContext.newInstance(TestSingle.class);
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                Root customer = (Root) jaxbUnmarshaller.unmarshal(file);
+                TestSingle customer = (TestSingle) jaxbUnmarshaller.unmarshal(file);
                 /**
                  * СОХРАНЕНИЕ ОБЪЕКТА В БД
                  */
-                RootImpl rootImpl = new RootImpl();
-                rootImpl.add(customer);
+//                RootImpl rootImpl = new RootImpl();
+//                rootImpl.add(customer);
+                TestSingleImpl testSingle = new TestSingleImpl();
+                testSingle.add(customer);
 
 
                 /**

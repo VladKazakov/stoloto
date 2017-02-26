@@ -12,6 +12,26 @@ public class Root {
 
     List<Stoloto> property = new ArrayList<Stoloto>();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Root() {
     }
 
