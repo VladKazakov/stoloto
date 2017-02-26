@@ -12,6 +12,12 @@
     <input name="file" type="file"><br>
     <input type="submit"><br>
 </form>
+<br>
+<br>
+<br>
+<div>
+     <h4>Казаков Владислав Валентинович. +7 (926) 01-02-550. vlad0102550@yandex.ru</h4>
+</div>
 
 
 
