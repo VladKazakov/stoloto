@@ -4,6 +4,8 @@ import com.model.TestSingle;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Создал Vlad Kazakov дата: 24.02.2017.
@@ -65,8 +67,14 @@ public class Main {
 //
 //        root.setList(list);
 
+        List<String> list = new ArrayList<String>();
+        list.add("test1");
+        list.add("test2");
+        list.add("test3");
+
         TestSingle testSingle = new TestSingle();
         testSingle.name = "Examle";
+        testSingle.setList(list);
 
 
 

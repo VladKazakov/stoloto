@@ -1,12 +1,10 @@
 package com.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -19,10 +17,23 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "testsingle")
 public class TestSingle implements Serializable {
 
-    @XmlElement
+    @XmlAttribute
     @Column
     public String name;
 
+    @XmlElement
+    @ElementCollection
+    @CollectionTable(joinColumns=@JoinColumn(name="testsingle_id"))
+    @Column
+    public List<String> list;
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
 
     public TestSingle() {
     }
