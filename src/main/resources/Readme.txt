@@ -11,3 +11,5 @@
 4. Необходимо создать БД stoloto. Скрипт в файле resources/createDB.sql
 
 5. В файле resources/hibernate.cfg.xml изменить настройки для подключения к БД
+
+6. Запустить файл utils/Mail. Создадутся в БД таблицы.
