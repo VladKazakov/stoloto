@@ -11,10 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.PropertyException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -71,18 +68,32 @@ public class FirstServlet extends HttpServlet {
                 testSingle.add(customer);
 
 
+
+                // Конвертируем объект обратно в XML
+                JAXBContext jc = JAXBContext.newInstance(TestSingle.class);
+                Marshaller marshaller = jc.createMarshaller();
+                marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+                String s = file.getName();
+                String filePath = "c:\\!test\\send\\" + s;
+
+                File file2 = new File(filePath);
+                marshaller.marshal(customer, file2);
+                //response.getWriter().println();
+
+
+
                 /**
                  * Возврат файла
                  */
                 // тип данных, которые вы отправляете
                 // например application/pdf, text/plain, text/html, image/jpg
-                response.setContentType("image/jpg");
-                response.setHeader("Content-disposition","attachment; filename=23.jpg");
+                response.setContentType("text/xml");
+                response.setHeader("Content-disposition","attachment; filename="+ file.getName());
                 // файл, который вы отправляете
-                File my_file = new File("c:\\!test\\23.jpg");
+                //File my_file = new File("c:\\!test\\23.jpg");
                 // отправить файл в response
                 OutputStream out = response.getOutputStream();
-                FileInputStream in = new FileInputStream(my_file);
+                FileInputStream in = new FileInputStream(file2);
                 byte[] buffer = new byte[4096];
                 int length;
                 while ((length = in.read(buffer)) > 0){
@@ -95,8 +106,8 @@ public class FirstServlet extends HttpServlet {
 
 
 
-                response.getWriter().println("XML to Java Object:");
-                response.getWriter().println(customer.toString());
+//                response.getWriter().println("XML to Java Object:");
+//                response.getWriter().println(customer.toString());
 
             } catch (PropertyException e) {
                 e.printStackTrace();
@@ -110,42 +121,6 @@ public class FirstServlet extends HttpServlet {
         }
         //request.getRequestDispatcher("/result.jsp").forward(request, response);
 
-
-        /**
-         * Возвращаем файл
-         */
-//        response.getWriter().println();
-//        response.getWriter().println("View XML: ");
-//
-//        try {
-//            Root root = new Root();
-//            List list = new ArrayList();
-//
-//            List<Stoloto> list1 = new ArrayList<Stoloto>();
-//            list1.add(new Stoloto("NAME10", "VALUE10"));
-//            // ПОЛЯ
-//            Stoloto stoloto1 = new Stoloto("NAME1", "value1");
-//            Stoloto stoloto2 = new Stoloto("NAME2", "value2");
-//            Stoloto stoloto3 = new Stoloto("NAME3", list1);
-//            list.add(stoloto1);
-//            list.add(stoloto2);
-//            list.add(stoloto3);
-//
-//
-//            root.setList(list);
-//
-//            JAXBContext jc = JAXBContext.newInstance(Root.class);
-//            Marshaller marshaller = jc.createMarshaller();
-//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//            marshaller.marshal(root, System.out);
-//            response.getWriter().println();
-//
-//
-//
-//
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
 
     }
 
